@@ -74,22 +74,17 @@ const TradingAssistant = () => {
     setCurrentPrice(priceData);
     
     // Update analysis with new price if analysis exists
-    if (analysis) {
-      const updatedAnalysis = {
-        ...analysis,
-        technicalOverview: {
-          ...analysis.technicalOverview,
-          currentPrice: priceData.price.toFixed(5),
-          priceChange: (priceData.change >= 0 ? '+' : '') + priceData.change.toFixed(5),
-          priceChangePercent: priceData.changePercent.toFixed(2)
-        },
-        marketInfo: {
-          ...analysis.marketInfo,
-          lastUpdate: new Date(priceData.timestamp).toLocaleTimeString()
-        }
-      };
-      setAnalysis(updatedAnalysis);
-    }
+    // Recalculer l'analyse complète avec les nouvelles données de prix
+    // Il est crucial de passer les données de prix actuelles à generateMarketData
+    // pour que les signaux soient basés sur les dernières informations.
+    const updatedAnalysis = generateMarketData(
+      selectedMarket,
+      selectedSymbol,
+      selectedTimeframe,
+      priceData // Passer les données de prix actuelles
+    );
+    setAnalysis(updatedAnalysis);
+    setLastUpdate(new Date(priceData.timestamp).toLocaleTimeString());
   };
 
   const analyzeMarket = () => {
