@@ -40,25 +40,16 @@ export const recommendationTypes = {
 };
 
 // Generate realistic market data similar to Pocket Option
-export const generateMarketData = (market, symbol, timeframe, currentPriceData = null) => {
-  let basePrice;
-  let priceVariation;
-  let currentPrice;
-
-  if (currentPriceData) {
-    basePrice = currentPriceData.price;
-    currentPrice = currentPriceData.price;
-    priceVariation = currentPriceData.change;
-  } else {
-    basePrice = getRealisticPrice(symbol);
-    priceVariation = basePrice * (Math.random() - 0.5) * 0.001; // 0.1% variation
-    currentPrice = basePrice + priceVariation;
-  }
-
+export const generateMarketData = (market, symbol, timeframe) => {
+  const basePrice = getRealisticPrice(symbol);
   const volatility = Math.random() * 100;
   const volume = Math.random() * 100;
   const rsi = Math.random() * 100;
   const sentiment = Math.random();
+  
+  // Generate more realistic price movements
+  const priceVariation = basePrice * (Math.random() - 0.5) * 0.001; // 0.1% variation
+  const currentPrice = basePrice + priceVariation;
   
   // Calculate technical indicators with more realistic values
   const resistance1 = currentPrice * (1 + Math.random() * 0.005);
