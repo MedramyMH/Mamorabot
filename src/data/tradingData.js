@@ -40,7 +40,7 @@ export const recommendationTypes = {
 };
 
 // Generate realistic market data similar to Pocket Option
-export const generateMarketData = (market, symbol, timeframe) => {
+export const generateMarketData = (market, symbol, timeframe, currentPriceData = null) => {
   const basePrice = getRealisticPrice(symbol);
   const volatility = Math.random() * 100;
   const volume = Math.random() * 100;
